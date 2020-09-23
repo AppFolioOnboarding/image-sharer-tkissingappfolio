@@ -19,6 +19,14 @@ module Api
       end
     end
 
+    def index
+      @feedbacks = if params[:image]
+                     Feedback.find_by(images_id: params[:image]).order created_at: :desc
+                   else
+                     Feedback.all.order created_at: :desc
+                   end
+    end
+
     def feedback_params
       { username: params.require(:username), comments: params.require(:comments) }
     end

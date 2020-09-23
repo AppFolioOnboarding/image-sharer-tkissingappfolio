@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   resources :feedbacks, only: [:new]
 
   namespace :api do
-    resource :feedbacks, only: [:create]
+    resource :feedbacks, only: %i[create index]
   end
 end
