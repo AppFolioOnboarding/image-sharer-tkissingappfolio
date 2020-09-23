@@ -70,6 +70,18 @@ function checkResponseStatus(res: Response): ApiResponse {
 }
 
 /**
+ * Perform an HTTP GET to the API and parse the response as JSON
+ */
+export function get(path: string): Promise<ApiResponse> {
+  return fetch(path, {
+    credentials: 'same-origin',
+    headers: Object.assign({ 'X-CSRF-Token': getCsrfToken() }, HEADERS),
+    method: 'GET',
+    redirect: 'error',
+  }).then(checkResponseStatus);
+}
+
+/**
  * Perform an HTTP POST to the API and parse the response as JSON
  */
 export function post(path: string, body: Record<string, any>): Promise<ApiResponse> {
@@ -81,3 +93,5 @@ export function post(path: string, body: Record<string, any>): Promise<ApiRespon
     redirect: 'error',
   }).then(checkResponseStatus);
 }
+
+(window as any)._get = get;
